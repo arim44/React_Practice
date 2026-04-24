@@ -1,0 +1,39 @@
+
+.book-card{
+    margin: 1rem;
+    padding: 0.5rem;
+    width: 15rem;
+    min-height: 15rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    background-color: beige;
+    border-radius: 1rem;
+    box-shadow: 0.25rem 0.5rem 0.5rem rgba(0,0,0,0.2);
+}
+
+.photo {
+    width: 150px;
+    height: 200px;
+    padding: 0.5rem;
+    border-radius: 15%;
+    object-fit: cover;
+    object-position: center;
+    border: 3px solid burlywood;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) ;
+}
+
+.title{
+    padding:0;
+    margin: 1rem;
+    text-align: center;
+}
+
+.author{
+    padding: 0;
+    margin: 0;
+    color: blue;
+    font-weight: bold;
+    text-align: center;
+}
