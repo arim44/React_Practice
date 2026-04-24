@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import type { Member } from './types/member'
 import BTS from './component/Bts'
 import MemberCard from './component/MemberCard'
+import ShowMemberCard from './component/ShowCard'
+import BTSshow from './component/BTSshow'
 
 // 데이타
 const members: Member[] = [
@@ -24,15 +26,20 @@ function App() {
   return (
     <>
       <div>
+        {/* 멤버카드 버튼으로 넘기기 다시 해봄 */}
+      <BTSshow members={members}/>
+
+        {/* 키값 준 어레이 렌더링
         {members.map((member) => (
           <React.Fragment key= {member.nick}>
             <MemberCard member= {member}></MemberCard>
           </React.Fragment>
-        ))}
+        ))} */}
 
       {/* 멤버카드 버튼으로 넘기기
         <BTS members={members} /> */}
 
+      {/* 멤버카드 나열 */}
       {/* <MemberCard member={members[0]} />
       <MemberCard member={members[1]} />
       <MemberCard member={members[2]} />
