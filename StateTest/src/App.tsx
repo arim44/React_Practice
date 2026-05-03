@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -13,9 +13,14 @@ function App() {
 
   return (
     <>
-      <ClassCount init={1} />
+    <div>
+      {members.map((member) => 
+      <React.Fragment key = member.nick}
+      )}
+    </div>
+      {/* <ClassCount init={1} />
       <LiveInput />
-      <StateParent />
+      <StateParent /> */}
     </>
   )
 }

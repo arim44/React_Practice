@@ -1,5 +1,4 @@
-// index 와 인덱스 변환 함수
-
+// index 와 인덱스 변환 함수, 버튼만들고 버튼 기능삽입
 interface Navigation2Props{
     index: number
     // 함수로 반환
