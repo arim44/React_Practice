@@ -3,7 +3,7 @@ import type { Todo } from '../App';
 import type React from 'react';
 
 
-// todo를 하나 넘겨받음
+// todo를 한개, 체크업데이트, 삭제 받음
 interface TodoItemProps {
     todo: Todo;
     onUpdate: (targetId: number) => void;
@@ -27,7 +27,7 @@ function TodoItem({ todo, onUpdate, onDelete}: TodoItemProps) {
                 <input type="checkbox" checked={todo.isDone} onChange={onChangeCheckbox} />
             </div>
             <div className="title_col">{todo.content}</div>
-            <div className="date_col">{new Date().toLocaleDateString()}</div>
+            <div className="date_col">{new Date(todo.createDate).toLocaleDateString()}</div>
             <div className="btn_col">
                 <button onClick={onClickDelete}>삭제</button>
             </div>
