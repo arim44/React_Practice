@@ -50,33 +50,44 @@ type Action =
 
 // (함수)상태를 새로 받아서 조작하고 다시 상태를 내놓음
 function reducer(todos: Todo[], action: Action) {
+  let result;   // 결과 변수
+
   switch (action.type) {
     case 'CREATE': {
-      return [action.newItem, ...todos];
+      result = [action.newItem, ...todos];
+      break;
     }
     case 'UPDATE': {
-      return todos.map((todo) =>
+      result =  todos.map((todo) =>
         //검사
         todo.id === action.targetId ? { ...todo, isDone: !todo.isDone } : todo
       );
+      break;
     }
     case 'DELETE': {
-      return todos.filter((todo) => todo.id !== action.targetId);
+      result =  todos.filter((todo) => todo.id !== action.targetId);
+      break;
     }
     default:
-      return todos;
+      result =  todos;
   }
+  // 저장
+  localStorage.setItem('todos', JSON.stringify(result));
+  return result;
 }
 
 
 function App() {
-  // const [todos, setTodos] = useState<Todo[]>(mockTdos);
-  //
-  const [todos, dispatch] = useReducer(reducer, mockTdos);
+  //로드
+  const stored = localStorage.getItem('todos');
+  const initTodos: Todo[] = stored? JSON.parse(stored) : [];
+
+  const [todos, dispatch] = useReducer(reducer, initTodos);
+  // 저장된거 로드 ?? 널이면 뒤에꺼 반환
+  const initId = Number(localStorage.getItem('todoId') ?? 1);
 
   //새로운 아이템을 만들고 셋투두스에서 추가 아이디를 새로운애한테 부여해야함 useRef
-  // 현재로선 시작점 3임
-  const idRef = useRef(3);
+  const idRef = useRef(initId);
 
   const onCreate = useCallback((content: string) => {
     const newItem = {
@@ -90,6 +101,9 @@ function App() {
     // setTodos([newItem, ...todos])
     dispatch({ type: 'CREATE', newItem })
     idRef.current += 1;
+
+    // idRef.current 저장해서 id로 사용하려고
+    localStorage.setItem('todoId', JSON.stringify(idRef.current));
   }, [])
 
   // 체크 수정(아이디를 넘겨받음)
@@ -121,7 +135,7 @@ function App() {
       <Header />
       {/* 범위는 헤더 빼고 밸류 객체 4개 */}
       {/* todo 변경시 다 같이 변경되므로 컨텍스트 나누기 */}
-      <TodoStateContext.Provider value={{ todos }}>
+      <TodoStateContext.Provider value={{todos}}>
         <TodoDispatchContext value={dispatches}>
           <TodoEditor />
           <TodoList />
