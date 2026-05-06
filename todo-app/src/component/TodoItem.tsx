@@ -1,16 +1,22 @@
 import './TodoItem.css'
 import type { Todo } from '../App';
-import type React from 'react';
+import React, { useCallback, useContext } from 'react';
+import { TodoDispatchContext } from './TodoContext';
+// import TodoContext from './TodoContext';
 
 
 // todo를 한개, 체크업데이트, 삭제 받음
 interface TodoItemProps {
     todo: Todo;
-    onUpdate: (targetId: number) => void;
-    onDelete: (targetId: number) => void;
+    // onUpdate: (targetId: number) => void;
+    // onDelete: (targetId: number) => void;
 }
 
-function TodoItem({ todo, onUpdate, onDelete}: TodoItemProps) {
+function TodoItem({ todo}: TodoItemProps) {
+    console.log(`${todo.id} TodoItem 업데이트`);
+    // 투두컨텍스트에서 onUpdate, onDelete 가져오기
+    const {onUpdate, onDelete} = useContext(TodoDispatchContext);
+
     // 체크박스 토글
     const onChangeCheckbox = () => {
         onUpdate(todo.id);
@@ -35,4 +41,6 @@ function TodoItem({ todo, onUpdate, onDelete}: TodoItemProps) {
     );
 }
 
-export default TodoItem;
+// 리액트 메모는 props가 바꼈을떄 다시 그림 그래서 안의 변수들도 안바뀌게 해야함
+// 함수가 다시 정의되지 않게 usecallback
+export default React.memo(TodoItem);

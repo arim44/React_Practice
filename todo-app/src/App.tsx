@@ -1,5 +1,5 @@
 
-import { act, useRef, useState } from 'react'
+import { act, useCallback, useMemo, useRef, useState } from 'react'
 import './App.css'
 import Header from './component/Header'
 import TodoEditor from './component/TodoEditor'
@@ -7,7 +7,9 @@ import TodoList from './component/TodoList'
 
 //리듀스
 import { useReducer } from "react";
-
+// import TodoContext from './component/TodoContext'
+import { TodoStateContext } from './component/TodoContext'
+import { TodoDispatchContext } from './component/TodoContext'
 
 // 테스트 목업 데이타
 const mockTdos = [
@@ -76,7 +78,7 @@ function App() {
   // 현재로선 시작점 3임
   const idRef = useRef(3);
 
-  const onCreate = (content: string) => {
+  const onCreate = useCallback((content: string) => {
     const newItem = {
       id: idRef.current,
       content,
@@ -86,34 +88,54 @@ function App() {
     }
     // newItem에 기존에 있는 todos를 펼침
     // setTodos([newItem, ...todos])
-    dispatch({type:'CREATE', newItem})
+    dispatch({ type: 'CREATE', newItem })
     idRef.current += 1;
-  }
+  }, [])
 
   // 체크 수정(아이디를 넘겨받음)
-  const onUpdate = (targetId: number) => {
-    // id 같은지 체크해서 같으면 토글, setTodos해줘야 다시 그림
+  const onUpdate = useCallback((targetId: number) => {
+    // id 같은지 체크해서 같으면 토글, setTodos해줘야 다시 그림 
     // setTodos(
     //   todos.map((todo) =>
     //     //검사
     //     todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo
     //   ), // 반환은 todo배열임
     // );
-    dispatch({type:'UPDATE', targetId});
-  }
+    dispatch({ type: 'UPDATE', targetId });
+  }, [])
 
   //삭제
-  const onDelete = (targetId: number) => {
+  const onDelete = useCallback((targetId: number) => {
     //필터로 아닌것만 골라서 개만 폴스로 만들어줌
     // setTodos(todos.filter((todo) => todo.id !== targetId));
-    dispatch({type:'DELETE', targetId});
-  }
+    dispatch({ type: 'DELETE', targetId });
+  }, [])
+
+  // [] 의존성 배열
+  const dispatches = useMemo(
+    // 객체 {onCreate, onUpdate, onDelete} 이렇게 생김
+    ()=> ({onCreate, onUpdate, onDelete}),[onCreate, onUpdate, onDelete])
 
   return (
     <div className='App'>
       <Header />
-      <TodoEditor onCreate={onCreate} />
-      <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      {/* 범위는 헤더 빼고 밸류 객체 4개 */}
+      {/* todo 변경시 다 같이 변경되므로 컨텍스트 나누기 */}
+      <TodoStateContext.Provider value={{ todos }}>
+        <TodoDispatchContext value={dispatches}>
+          <TodoEditor />
+          <TodoList />
+        </TodoDispatchContext>
+      </TodoStateContext.Provider>
+
+
+      {/* // <div className='App'>
+    //   <Header />
+    //   {/* 밸류 객체 4개 */}
+      {/* //   <TodoContext.Provider value={{todos, onCreate, onUpdate, onDelete}}>
+    //   <TodoEditor onCreate={onCreate} />
+    //   <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+    //   </TodoContext.Provider>  */}
     </div>
   )
 }

@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Main /> },
-      { path: 'Product/*', element: <Product /> },
+      { path: 'Product/:id', element: <Product /> },
     ],
   },
   // {
@@ -46,7 +46,7 @@ function App() {
     //   {/* 루트는 메인을 보여주고 루트/product 경로로 들어가면 상품페이지로 헤더는 변화없음 */}
     //   <Routes>
     //     <Route path='/' element={<Main />} />
-    //     <Route path='/product/*' element={<Product />} />
+    //     <Route path='/product/:id' element={<Product />} />
     //     <Route path='*' element={<NotFound />} />
     //   </Routes>
     // </BrowserRouter>
