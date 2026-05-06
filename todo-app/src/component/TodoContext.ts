@@ -22,6 +22,7 @@ import type { Todo } from "../App";
 
 // export default TodoContext;
 
+//컨텍스트 2개로 분리
 interface TodoStateContextType {
     todos: Todo[];
 }
