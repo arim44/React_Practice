@@ -1,3 +1,8 @@
 .Header h1 {
     color: rgb(61, 165, 225);
 }
+
+.date-weather {
+    display: flex;
+    gap: 2rem;
+}
