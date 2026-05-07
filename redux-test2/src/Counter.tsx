@@ -1,20 +1,21 @@
 import { useDispatch, useSelector } from "react-redux"
 import { increase, decrease } from "./counterSlice";
 import { changeName } from "./userSlice";
-import type { RootState } from "./store";
+import DisPlayCounter from "./displayCounter";
+import DisPlayName from "./displayName";
 
 // 보여줄꺼 카운터, 네임 유저셀렉터로 상태 가져옴
 // 함수를 가져와야 함 유저 디스패치
-export default function CounterA(){
-    const count = useSelector((state:RootState)=> state.counter.value);
-    const name = useSelector((state:RootState) => state.user.name);
+export default function Counter(){
+    // const count = useSelector((state:RootState)=> state.counter.value);
+    // const name = useSelector((state:RootState) => state.user.name);
 
    const dispatch = useDispatch();
 
     return(
         <div>
-            <h1>{name}</h1>
-            <h1>{count}</h1>
+            <DisPlayName />
+            <DisPlayCounter />
             <button onClick={()=>dispatch(increase())}>
                 <h1>+</h1>
             </button>

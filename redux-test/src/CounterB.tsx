@@ -1,6 +1,6 @@
 
 import { useDispatch } from "react-redux"
-import { decrease } from "./store"
+import { decrease } from "./counterSlice";
 
 // 함수를 가져와야 함 유저 디스패치
 export default function CounterB(){
