@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { increase } from "./action"
+import { increase } from "./store"
 
 // 함수를 가져와야 함 유저 디스패치
 export default function CounterA(){
