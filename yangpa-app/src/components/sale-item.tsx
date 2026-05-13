@@ -1,6 +1,8 @@
 import SaleDate from "@/typs";  // 디폴트가 그냥 받는데 디폴트 아니면 type{ } 객체로 받아야 함
 import Image from "next/image";
 import style from './sale-item.module.css'
+import Link from "next/link";
+import { ENV } from "@/env";
 
 export default function SaleItem({
     id,
@@ -9,8 +11,9 @@ export default function SaleItem({
     price,
     photo, }: SaleDate) {
     // 이미지 경로/{이미지이름}
-    const imageUrl = `https://styangpa.blob.core.windows.net/yangpa/${photo}`
+    const imageUrl = `${ENV.IMAGE_URL}/${photo}`
     return (
+        <Link href={`/sale/${id}`}>
         <div className={style.container}>
             {/* 이미지 */}
             <Image className={style.image} src={imageUrl} alt="" width={100} height={100}/>
@@ -21,6 +24,7 @@ export default function SaleItem({
                 <div className={style.price}>가격 : {price}원</div>
             </div>
         </div>
+        </Link>
     );
 }
 

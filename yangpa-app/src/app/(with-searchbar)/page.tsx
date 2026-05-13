@@ -6,7 +6,7 @@ import style from './page.module.css'
 
 export default async function Home() {
   // url 가져오기
-  const response = await fetch(`${ENV.API_URL}/sales/recent`, {cache:'force-cache'});
+  const response = await fetch(`${ENV.API_URL}/sales/recent`, {next: {revalidate:10}}); //{cache:'force-cache'}, {cache:'no-store'} 
   // 제이슨 파일 가져오기
   const data = await response.json();
   // 데이타 SaleDate의 배열로
